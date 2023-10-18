@@ -87,6 +87,9 @@ def main():
           train_correct = np.sum(train_y_pred == train_y)
           train_acc = train_correct / len(train_y)
 
+          print("train correct: {}".format(train_correct))
+          print("len y: {}".format(len(train_y))
+
           #######################################
           # TODO Compute 4-fold cross validation accuracy
           #######################################
