@@ -74,7 +74,7 @@ def main():
      print("Performing 4-fold cross validation")
      for k in [1, 2, 5, 10, 100, 1000]:
           t0 = time.time()
-
+          print("k: {}".format(k))
           #######################################
           # TODO Compute train accuracy using whole set
           #######################################
