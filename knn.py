@@ -283,8 +283,15 @@ def cross_validation(train_X, train_y, num_folds=4, k=1):
                predictions.append(predicted_label)
 
           # Calculate accuracy
-          correct = np.sum(predictions == validation_y)
+          correct = 0
+          for i in range(0, len(validation_y)):
+               if (predictions[i] == validation_y[i]):
+                    correct += 1
+          #train_correct = np.sum(train_y_pred == train_y)
           accuracy = correct / len(validation_y)
+
+          #correct = np.sum(predictions == validation_y)
+          #accuracy = correct / len(validation_y)
           accuracies.append(accuracy)
      
      avg_val_acc = np.mean(accuracies)
