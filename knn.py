@@ -83,7 +83,8 @@ def main():
                query = train_X[i]
                predicted_label = knn_classify_point(train_X, train_y, query, k)
                train_y_pred.append(predicted_label)
-
+          
+          train_correct = 0
           # Evaluate correctness
           for i in range(0, len(train_y)):
                if (train_y_pred[i] == train_y[i]):
