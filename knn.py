@@ -70,7 +70,7 @@ def main():
 
      # Search over possible settings of k
      print("Performing 4-fold cross validation")
-     for k in [1,3,5,7,9,99,999,8000]:
+     for k in [1]:
           t0 = time.time()
 
           #######################################
