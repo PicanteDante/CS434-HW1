@@ -238,7 +238,7 @@ def cross_validation(train_X, train_y, num_folds=4, k=1):
 
     avg_val_acc = np.mean(accuracies)
     var_val_acc = np.var(accuracies)
-    return avg_val_acc, varr_val_acc
+    return avg_val_acc, var_val_acc
 
 
 
