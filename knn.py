@@ -69,7 +69,7 @@ def main():
      #######################################
 
      results = []
-     ''''
+     
      # Search over possible settings of k
      print("Performing 4-fold cross validation")
      for k in [1, 2, 5, 10, 100, 1000]:
@@ -142,7 +142,7 @@ def main():
      for k, train_acc, val_acc, val_acc_var in results:
           print("k = {:5d} -- train acc = {:.2f}%  val acc = {:.2f}% ({:.4f})".format(k, train_acc*100, val_acc*100, val_acc_var*100))
      
-
+     '''
 
 
 
