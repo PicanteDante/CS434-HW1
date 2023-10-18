@@ -89,6 +89,7 @@ def main():
 
           print("train correct: {}".format(train_correct))
           print("len y: {}".format(len(train_y)))
+          print("len trainypred: {}".format(len(train_y_pred)))
 
           #######################################
           # TODO Compute 4-fold cross validation accuracy
