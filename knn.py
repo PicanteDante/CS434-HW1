@@ -85,6 +85,9 @@ def main():
                train_y_pred.append(predicted_label)
 
           # Ensure both arrays have the same data type int32
+          train_y_pred = np.array(train_y_pred)
+          train_y = np.array(train_y)
+
           train_y_pred = train_y_pred.astype(np.int32)
           train_y = train_y.astype(np.int32)
 
