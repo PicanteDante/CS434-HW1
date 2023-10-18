@@ -90,7 +90,7 @@ def main():
           #######################################
           # TODO Compute 4-fold cross validation accuracy
           #######################################
-          val_acc, val_acc_var = cross_validation(train_X, train_y, num_folds=4, k=k)
+          val_acc, val_acc_var = cross_validation(train_X, train_y, num_folds=len(train_X), k=k)
       
           t1 = time.time()
           print("k = {:5d} -- train acc = {:.2f}%  val acc = {:.2f}% ({:.4f})\t\t[exe_time = {:.2f}]".format(k, train_acc*100, val_acc*100, val_acc_var*100, t1-t0))
