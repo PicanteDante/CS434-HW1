@@ -2,72 +2,71 @@ import numpy as np
 import time
 
 def main():
-
-    #############################################################
-    # These first bits are just to help you develop your code
-    # and have expected ouputs given. All asserts should pass.
-    ############################################################
-    '''
-    # I made up some random 3-dimensional data and some labels for us
-    example_train_x = np.array([ [ 1, 0, 2], [3, -2, 4], [5, -2, 4],
-                                 [ 4, 2, 1.5], [3.2, np.pi, 2], [-5, 0, 1]])
-    example_train_y = np.array([[0], [1], [1], [1], [0], [1]])
+     #############################################################
+     # These first bits are just to help you develop your code
+     # and have expected ouputs given. All asserts should pass.
+     ############################################################
+     '''
+     # I made up some random 3-dimensional data and some labels for us
+     example_train_x = np.array([ [ 1, 0, 2], [3, -2, 4], [5, -2, 4],
+                                   [ 4, 2, 1.5], [3.2, np.pi, 2], [-5, 0, 1]])
+     example_train_y = np.array([[0], [1], [1], [1], [0], [1]])
   
-    #########
-    # Sanity Check 1: If I query with examples from the training set 
-    # and k=1, each point should be its own nearest neighbor
+     #########
+     # Sanity Check 1: If I query with examples from the training set 
+     # and k=1, each point should be its own nearest neighbor
     
-    for i in range(len(example_train_x)):
-        assert([i] == get_nearest_neighbors(example_train_x, example_train_x[i], 1))
+     for i in range(len(example_train_x)):
+          assert([i] == get_nearest_neighbors(example_train_x, example_train_x[i], 1))
         
-    #########
-    # Sanity Check 2: See if neighbors are right for some examples (ignoring order)
-    nn_idx = get_nearest_neighbors(example_train_x, np.array( [ 1, 4, 2] ), 2)
-    assert(set(nn_idx).difference(set([4,3]))==set())
+     #########
+     # Sanity Check 2: See if neighbors are right for some examples (ignoring order)
+     nn_idx = get_nearest_neighbors(example_train_x, np.array( [ 1, 4, 2] ), 2)
+     assert(set(nn_idx).difference(set([4,3]))==set())
 
-    nn_idx = get_nearest_neighbors(example_train_x, np.array( [ 1, -4, 2] ), 3)
-    assert(set(nn_idx).difference(set([1,0,2]))==set())
+     nn_idx = get_nearest_neighbors(example_train_x, np.array( [ 1, -4, 2] ), 3)
+     assert(set(nn_idx).difference(set([1,0,2]))==set())
 
-    nn_idx = get_nearest_neighbors(example_train_x, np.array( [ 10, 40, 20] ), 5)
-    assert(set(nn_idx).difference(set([4, 3, 0, 2, 1]))==set())
+     nn_idx = get_nearest_neighbors(example_train_x, np.array( [ 10, 40, 20] ), 5)
+     assert(set(nn_idx).difference(set([4, 3, 0, 2, 1]))==set())
 
-    #########
-    # Sanity Check 3: Neighbors for increasing k should be subsets
-    query = np.array( [ 10, 40, 20] )
-    p_nn_idx = get_nearest_neighbors(example_train_x, query, 1)
-    for k in range(2,7):
-      nn_idx = get_nearest_neighbors(example_train_x, query, k)
-      assert(set(p_nn_idx).issubset(nn_idx))
-      p_nn_idx = nn_idx
+     #########
+     # Sanity Check 3: Neighbors for increasing k should be subsets
+     query = np.array( [ 10, 40, 20] )
+     p_nn_idx = get_nearest_neighbors(example_train_x, query, 1)
+     for k in range(2,7):
+          nn_idx = get_nearest_neighbors(example_train_x, query, k)
+          assert(set(p_nn_idx).issubset(nn_idx))
+          p_nn_idx = nn_idx
    
-    #########
-    # Test out our prediction code
-    queries = np.array( [[ 10, 40, 20], [-2, 0, 5], [0,0,0]] )
-    pred = predict(example_train_x, example_train_y, queries, 3)
-    assert( np.all(pred == np.array([[0],[1],[0]])))
+     #########
+     # Test out our prediction code
+     queries = np.array( [[ 10, 40, 20], [-2, 0, 5], [0,0,0]] )
+     pred = predict(example_train_x, example_train_y, queries, 3)
+     assert( np.all(pred == np.array([[0],[1],[0]])))
 
-    #########
-    # Test our our accuracy code
-    true_y = np.array([[0],[1],[2],[1],[1],[0]])
-    pred_y = np.array([[5],[1],[0],[0],[1],[0]])                    
-    assert( compute_accuracy(true_y, pred_y) == 3/6)
+     #########
+     # Test our our accuracy code
+     true_y = np.array([[0],[1],[2],[1],[1],[0]])
+     pred_y = np.array([[5],[1],[0],[0],[1],[0]])                    
+     assert( compute_accuracy(true_y, pred_y) == 3/6)
 
-    pred_y = np.array([[5],[1],[2],[0],[1],[0]])                    
-    assert( compute_accuracy(true_y, pred_y) == 4/6)
+     pred_y = np.array([[5],[1],[2],[0],[1],[0]])                    
+     assert( compute_accuracy(true_y, pred_y) == 4/6)
 
-    '''
+     '''
 
-    #######################################
-    # Now on to the real data!
-    #######################################
+     #######################################
+     # Now on to the real data!
+     #######################################
 
-    # Load training and test data as numpy matrices 
-    train_X, train_y, test_X = load_data()
+     # Load training and test data as numpy matrices 
+     train_X, train_y, test_X = load_data()
 
 
-    #######################################
-    # Q9 Hyperparmeter Search
-    #######################################
+     #######################################
+     # Q9 Hyperparmeter Search
+     #######################################
 
      # Search over possible settings of k
      print("Performing 4-fold cross validation")
