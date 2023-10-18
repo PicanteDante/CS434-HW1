@@ -68,6 +68,8 @@ def main():
      # Q9 Hyperparmeter Search
      #######################################
 
+     results = []
+
      # Search over possible settings of k
      print("Performing 4-fold cross validation")
      for k in [1]:
