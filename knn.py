@@ -87,7 +87,7 @@ def main():
           # Evaluate correctness
           for i in range(0, len(train_y)):
                if (train_y_pred[i] == train_y[i]):
-                    train_correct++
+                    train_correct += 1
           #train_correct = np.sum(train_y_pred == train_y)
           train_acc = train_correct / len(train_y)
 
