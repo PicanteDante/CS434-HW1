@@ -7,7 +7,7 @@ def main():
     # These first bits are just to help you develop your code
     # and have expected ouputs given. All asserts should pass.
     ############################################################
-
+    '''
     # I made up some random 3-dimensional data and some labels for us
     example_train_x = np.array([ [ 1, 0, 2], [3, -2, 4], [5, -2, 4],
                                  [ 4, 2, 1.5], [3.2, np.pi, 2], [-5, 0, 1]])
@@ -55,7 +55,7 @@ def main():
     pred_y = np.array([[5],[1],[2],[0],[1],[0]])                    
     assert( compute_accuracy(true_y, pred_y) == 4/6)
 
-
+    '''
 
     #######################################
     # Now on to the real data!
@@ -69,24 +69,32 @@ def main():
     # Q9 Hyperparmeter Search
     #######################################
 
-    # Search over possible settings of k
-    print("Performing 4-fold cross validation")
-    for k in [1,3,5,7,9,99,999,8000]:
-      t0 = time.time()
+     # Search over possible settings of k
+     print("Performing 4-fold cross validation")
+     for k in [1,3,5,7,9,99,999,8000]:
+          t0 = time.time()
 
-      #######################################
-      # TODO Compute train accuracy using whole set
-      #######################################
-      train_acc = 0 
+     #######################################
+     # TODO Compute train accuracy using whole set
+     #######################################
+     train_y_pred = []
+     for i in range(train_X.shape[0]):
+          query = train_X[i]
+          predicted_label = knn_classify_point(train_X, train_y, query, k)
+          train_y_pred.append(predicted_label)
 
-      #######################################
-      # TODO Compute 4-fold cross validation accuracy
-      #######################################
-      val_acc, val_acc_var = 0,0
+     train_correct = np.sum(train_y_pred == train_y)
+     train_acc = train_correct / len(train_y)
+
+     #######################################
+     # TODO Compute 4-fold cross validation accuracy
+     #######################################
+     val_acc, val_acc_var = cross_validation(train_X, train_y, num_folds=4, k=k)
       
-      t1 = time.time()
-      print("k = {:5d} -- train acc = {:.2f}%  val acc = {:.2f}% ({:.4f})\t\t[exe_time = {:.2f}]".format(k, train_acc*100, val_acc*100, val_acc_var*100, t1-t0))
-    
+     t1 = time.time()
+     print("k = {:5d} -- train acc = {:.2f}%  val acc = {:.2f}% ({:.4f})\t\t[exe_time = {:.2f}]".format(k, train_acc*100, val_acc*100, val_acc_var*100, t1-t0))
+     for k, train_acc, val_acc, val_acc_var in results:
+          print("k = {:5d} -- train acc = {:.2f}%  val acc = {:.2f}% ({:.4f})".format(k, train_acc*100, val_acc*100, val_acc_var*100))
     #######################################
 
 
