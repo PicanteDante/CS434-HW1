@@ -102,7 +102,7 @@ def main():
     pred_test_y = predict(train_X, train_y, test_X, best_k)    
     
     # add index and header then save to file
-    test_out = np.concatenate((np.expand_dims(np.array(range(2000),dtype=np.int), axis=1), pred_test_y), axis=1)
+    test_out = np.concatenate((np.expand_dims(np.array(range(2000),dtype=int), axis=1), pred_test_y), axis=1)
     header = np.array([["id", "income"]])
     test_out = np.concatenate((header, test_out))
     np.savetxt('test_predicted.csv', test_out, fmt='%s', delimiter=',')
