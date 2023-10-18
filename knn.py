@@ -97,22 +97,22 @@ def main():
     #######################################
 
 
-    #######################################
-    # Q10 Kaggle Submission
-    #######################################
+     #######################################
+     # Q10 Kaggle Submission
+     #######################################
 
 
-    # TODO set your best k value and then run on the test set
-    best_k = 1
+     # TODO set your best k value and then run on the test set
+     best_k = 1
 
-    # Make predictions on test set
-    pred_test_y = predict(train_X, train_y, test_X, best_k)    
+     # Make predictions on test set
+     pred_test_y = predict(train_X, train_y, test_X, best_k)    
     
-    # add index and header then save to file
-    test_out = np.concatenate((np.expand_dims(np.array(range(2000),dtype=int), axis=1), pred_test_y), axis=1)
-    header = np.array([["id", "income"]])
-    test_out = np.concatenate((header, test_out))
-    np.savetxt('test_predicted.csv', test_out, fmt='%s', delimiter=',')
+     # add index and header then save to file
+     test_out = np.concatenate((np.expand_dims(np.array(range(2000),dtype=int), axis=1), pred_test_y), axis=1)
+     header = np.array([["id", "income"]])
+     test_out = np.concatenate((header, test_out))
+     np.savetxt('test_predicted.csv', test_out, fmt='%s', delimiter=',')
 
 ######################################################################
 # Q7 get_nearest_neighbors 
