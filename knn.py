@@ -206,39 +206,42 @@ def knn_classify_point(examples_X, examples_y, query, k):
 ######################################################################
 
 def cross_validation(train_X, train_y, num_folds=4, k=1):
-    n = train_X.shape[0]
-    fold_size = n // num_folds
-    accuracies = []
+     n = train_X.shape[0]
+     fold_size = n // num_folds
+     accuracies = []
 
-    for fold in range(num_folds):
-        # Split the data into training and validation sets
-        validation_start = fold * fold_size
-        validation_end = (fold + 1) * fold_size
-        validation_X = train_X[validation_start:validation_end]
-        validation_y = train_y[validation_start:validation_end]
+     for fold in range(num_folds):
+          # Split the data into training and validation sets
+          validation_start = fold * fold_size
+          validation_end = (fold + 1) * fold_size
+          validation_X = train_X[validation_start:validation_end]
+          validation_y = train_y[validation_start:validation_end]
 
-        train_X_parts = [train_X[:validation_start], train_X[validation_end:]]
-        train_y_parts = [train_y[:validation_start], train_y[validation_end:]]
+          #train_X_parts = [train_X[:validation_start], train_X[validation_end:]]
+          #train_y_parts = [train_y[:validation_start], train_y[validation_end:]]
+          # Use numpy.split to split the training data
+          train_X_parts = np.split(train_X, [validation_start, validation_end])
+          train_y_parts = np.split(train_y, [validation_start, validation_end])
         
-        # Combine the training parts
-        train_X_fold = np.vstack(train_X_parts)
-        train_y_fold = np.vstack(train_y_parts)
+          # Combine the training parts
+          train_X_fold = np.vstack(train_X_parts)
+          train_y_fold = np.vstack(train_y_parts)
 
-        # Classify using k-NN
-        predictions = []
-        for i in range(len(validation_X)):
-            query = validation_X[i]
-            predicted_label = knn_classify_point(train_X_fold, train_y_fold, query, k)
-            predictions.append(predicted_label)
+          # Classify using k-NN
+          predictions = []
+          for i in range(len(validation_X)):
+               query = validation_X[i]
+               predicted_label = knn_classify_point(train_X_fold, train_y_fold, query, k)
+               predictions.append(predicted_label)
 
-        # Calculate accuracy
-        correct = np.sum(predictions == validation_y)
-        accuracy = correct / len(validation_y)
-        accuracies.append(accuracy)
-
-    avg_val_acc = np.mean(accuracies)
-    var_val_acc = np.var(accuracies)
-    return avg_val_acc, var_val_acc
+          # Calculate accuracy
+          correct = np.sum(predictions == validation_y)
+          accuracy = correct / len(validation_y)
+          accuracies.append(accuracy)
+     
+     avg_val_acc = np.mean(accuracies)
+     var_val_acc = np.var(accuracies)
+     return avg_val_acc, var_val_acc
 
 
 
