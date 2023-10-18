@@ -88,7 +88,7 @@ def main():
           train_acc = train_correct / len(train_y)
 
           print("train correct: {}".format(train_correct))
-          print("len y: {}".format(len(train_y))
+          print("len y: {}".format(len(train_y)))
 
           #######################################
           # TODO Compute 4-fold cross validation accuracy
