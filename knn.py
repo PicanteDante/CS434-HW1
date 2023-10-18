@@ -84,6 +84,10 @@ def main():
                predicted_label = knn_classify_point(train_X, train_y, query, k)
                train_y_pred.append(predicted_label)
 
+          # Ensure both arrays have the same data type int32
+          train_y_pred = train_y_pred.astype(np.int32)
+          train_y = train_y.astype(np.int32)
+
           train_correct = np.sum(train_y_pred == train_y)
           train_acc = train_correct / len(train_y)
 
