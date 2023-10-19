@@ -198,7 +198,7 @@ def get_nearest_neighbors(example_set, query):
 		if (distances[near] < distances[idx_of_nearest]):
 			idx_of_nearest = near"""
     
-	return np.argsort(distances)[:k]
+	return np.argsort(distances)[:1]
 
 
 ######################################################################
