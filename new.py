@@ -6,7 +6,7 @@ train_X = traindata[1:, :-1]
 train_y = traindata[1:, -1]
 train_y = train_y[:,np.newaxis]
 
-data = traindata = np.genfromtxt('train.csv', delimiter=',', names=True, dtype=None, encoding=None)
+data = traindata = np.genfromtxt('train.csv', delimiter=',', names=True, dtype=None)
 
 print(data[0])
 print(data.dtype.names)
