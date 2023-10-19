@@ -352,7 +352,7 @@ def predict(examples_X, examples_y, queries_X, k):
 
 # Load data
 def load_data():
-    traindata = np.genfromtxt('train.csv', delimiter=',')[1:, 1:]
+    traindata = np.genfromtxt('train.csv', delimiter=',')[:, 1:]
     train_X = traindata[1:, :-1]
     train_y = traindata[1:, -1]
     train_y = train_y[:,np.newaxis]
