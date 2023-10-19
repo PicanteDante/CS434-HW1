@@ -102,12 +102,12 @@ def main():
           val_acc, val_acc_var = cross_validation(train_X, train_y, num_folds=4, k=k)
       
           t1 = time.time()
-          print("k = {:5d} -- train acc = {:.2f}%  val acc = {:.2f}% ({:.4f})\t[exe_time = {:.3f}]".format(k, train_acc*100, val_acc*100, val_acc_var*100, t1-t0))
+          print("k = {:5d} -- train acc = {:.2f}%  val acc = {:.2f}% ({:.4f})\t\t[exe_time = {:.2f}]".format(k, train_acc*100, val_acc*100, val_acc_var*100, t1-t0))
 
-          results.append((k, train_acc, val_acc, val_acc_var, t1-t0))
+          results.append((k, train_acc, val_acc, val_acc_var))
 
-     for k, train_acc, val_acc, val_acc_var, exec_time in results:
-          print("k = {:5d} -- train acc = {:.2f}%  val acc = {:.2f}% ({:.4f})\t[exe_time = {:.3f}]".format(k, train_acc*100, val_acc*100, val_acc_var*100, exec_time))
+     for k, train_acc, val_acc, val_acc_var in results:
+          print("k = {:5d} -- train acc = {:.2f}%  val acc = {:.2f}% ({:.4f})".format(k, train_acc*100, val_acc*100, val_acc_var*100))
      '''
      #######################################
 
