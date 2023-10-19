@@ -196,7 +196,7 @@ def get_nearest_neighbors(example_set, query, k):
 	print(distances[0:5])
 
 	# Calculate the element-wise squared differences for all pairs of vectors
-	squared_differences = (x - z) ** 2
+	squared_differences = (example_set - query) ** 2
 
 	# Sum the squared differences along all dimensions
 	sum_of_squared_differences = np.sum(squared_differences)
@@ -208,7 +208,7 @@ def get_nearest_neighbors(example_set, query, k):
 
 	# Get indices of the k nearest neighbors
 	idx_of_nearest = np.argsort(distances)[:k]
-	return idx_of_nearest  
+	return idx_of_nearest
 
 
 ######################################################################
