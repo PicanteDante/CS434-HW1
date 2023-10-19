@@ -71,8 +71,8 @@ def main():
      results = []
      
      # Search over possible settings of k
-     print("Performing 4-fold cross validation")
-     for k in [1, 2, 5, 10, 100, 1000]:
+     print("Performing 1NN cross validation")
+     for k in [1]:
           t0 = time.time()
           print("k: {}".format(k))
           #######################################
@@ -102,12 +102,9 @@ def main():
           val_acc, val_acc_var = cross_validation(train_X, train_y, num_folds=4, k=k)
       
           t1 = time.time()
-          print("k = {:5d} -- train acc = {:.2f}%  val acc = {:.2f}% ({:.4f})\t\t[exe_time = {:.2f}]".format(k, train_acc*100, val_acc*100, val_acc_var*100, t1-t0))
+          print("k = {} -- train acc = {:.2f}%  val acc = {:.2f}% ({:.4f})\t[exe_time = {:.3f}]".format(k, train_acc*100, val_acc*100, val_acc_var*100, t1-t0))
 
-          results.append((k, train_acc, val_acc, val_acc_var))
 
-     for k, train_acc, val_acc, val_acc_var in results:
-          print("k = {:5d} -- train acc = {:.2f}%  val acc = {:.2f}% ({:.4f})".format(k, train_acc*100, val_acc*100, val_acc_var*100))
      '''
      #######################################
 
@@ -190,30 +187,17 @@ def main():
 #                       neighbors of the query point
 ######################################################################
 
-def get_nearest_neighbors(example_set, query, k):
-	print(example_set)
-	print("\n")
-	print(query)
-	print("\n\n")
+def get_nearest_neighbors(example_set, query):
+    # Compute Euclidean distances between the query point and all examples
+    distances = np.linalg.norm(example_set - query, axis=1)
 	
-	# Compute Euclidean distances between the query point and all examples
-	distances = np.linalg.norm(example_set - query, axis=1)
-	print(distances[0:5])
-
-	# Calculate the element-wise squared differences for all pairs of vectors
-	squared_differences = (example_set - query) ** 2
-
-	# Sum the squared differences along all dimensions
-	sum_of_squared_differences = np.sum(squared_differences)
-
-	# Take the square root to get the Euclidean distance
-	euclidean_distance = np.sqrt(sum_of_squared_differences)
-
-	#print(euclidean_distance)
-
-	# Get indices of the k nearest neighbors
-	idx_of_nearest = np.argsort(distances)[:k]
-	return idx_of_nearest
+    # Get nearest neighbor
+    idx_of_nearest = 10000000
+    for near in distances:
+		if (near < idx_of_nearest):
+			idx_of_nearest = near
+    
+    return idx_of_nearest
 
 
 ######################################################################
@@ -238,7 +222,7 @@ def get_nearest_neighbors(example_set, query, k):
 
 def knn_classify_point(examples_X, examples_y, query, k):
     # Get indices of the k nearest neighbors
-    nearest_indices = get_nearest_neighbors(examples_X, query, k)
+    nearest_indices = get_nearest_neighbors(examples_X, query)
     
     # Get the labels of the nearest neighbors
     nearest_labels = examples_y[nearest_indices]
