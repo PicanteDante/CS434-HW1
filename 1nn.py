@@ -193,7 +193,7 @@ def get_nearest_neighbors(example_set, query):
 
 	# Get nearest neighbor
 	idx_of_nearest = 0
-	for near in distances:
+	for near in range(0, len(distances)):
 		if (distances[near] < distances[idx_of_nearest]):
 			idx_of_nearest = near
     
