@@ -224,6 +224,9 @@ def knn_classify_point(examples_X, examples_y, query, k):
     # Get indices of the k nearest neighbors
     nearest_indices = get_nearest_neighbors(examples_X, query)
     
+    print(type(examples_y))
+    print(type(nearest_indices))
+    
     # Get the labels of the nearest neighbors
     nearest_labels = examples_y[nearest_indices]
     
