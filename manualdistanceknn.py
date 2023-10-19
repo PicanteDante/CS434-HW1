@@ -204,7 +204,7 @@ def get_nearest_neighbors(example_set, query, k):
 	# Take the square root to get the Euclidean distance
 	euclidean_distance = np.sqrt(sum_of_squared_differences)
 
-	print(euclidean_distance[0:5])
+	print(euclidean_distance)
 
 	# Get indices of the k nearest neighbors
 	idx_of_nearest = np.argsort(distances)[:k]
