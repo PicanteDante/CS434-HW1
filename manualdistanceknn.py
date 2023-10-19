@@ -192,19 +192,19 @@ def main():
 
 def get_nearest_neighbors(example_set, query, k):
     # Compute Euclidean distances between the query point and all examples
-    #distances = np.linalg.norm(example_set - query, axis=1)
+    distances = np.linalg.norm(example_set - query, axis=1)
+	print(distances[0:5])
 	
-	# Calculate the difference vector (x - z)
-	difference = x - z
-
-	# Calculate the squares of the differences
-	squared_differences = difference ** 2
+	# Calculate the element-wise squared differences for all pairs of vectors
+	squared_differences = (x - z) ** 2
 
 	# Sum the squared differences along all dimensions
 	sum_of_squared_differences = np.sum(squared_differences)
 
 	# Take the square root to get the Euclidean distance
 	euclidean_distance = np.sqrt(sum_of_squared_differences)
+	
+	print(euclidean_distance[0:5])
 	
     # Get indices of the k nearest neighbors
     idx_of_nearest = np.argsort(distances)[:k]
