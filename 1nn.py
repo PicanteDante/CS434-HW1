@@ -192,9 +192,9 @@ def get_nearest_neighbors(example_set, query):
 	distances = np.linalg.norm(example_set - query, axis=1)
 
 	# Get nearest neighbor
-	idx_of_nearest = 10000000
+	idx_of_nearest = 0
 	for near in distances:
-		if (near < idx_of_nearest):
+		if (distances[near] < distances[idx_of_nearest]):
 			idx_of_nearest = near
     
 	return idx_of_nearest
