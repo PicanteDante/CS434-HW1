@@ -357,6 +357,8 @@ def load_data():
     train_y = traindata[1:, -1]
     train_y = train_y[:,np.newaxis]
     
+    print(train_X[0])
+    
     test_X = np.genfromtxt('test_pub.csv', delimiter=',')[1:, 1:]
 
     return train_X, train_y, test_X
