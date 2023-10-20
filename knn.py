@@ -72,7 +72,11 @@ def main():
      
      # Search over possible settings of k
      print("Performing 4-fold cross validation")
-     for k in [1]:
+     
+     best_k = 0
+     best_acc = 0.0
+     
+     for k in [1,3,5,7,9,99,999,8000]:
           t0 = time.time()
           print("k: {}".format(k))
           #######################################
@@ -103,50 +107,13 @@ def main():
       
           t1 = time.time()
           print("k = {} -- train acc = {:.2f}%  val acc = {:.2f}% ({:.4f})\t[exe_time = {:.3f}]".format(k, train_acc*100, val_acc*100, val_acc_var*100, t1-t0))
-
           results.append((k, train_acc, val_acc, val_acc_var, t1-t0))
-
+          
+		if (val_acc > best_acc):
+			best_k = k
+          
      for k, train_acc, val_acc, val_acc_var, exec_time in results:
           print("k = {} -- train acc = {:.2f}%  val acc = {:.2f}% ({:.4f})\t[exe_time = {:.3f}]".format(k, train_acc*100, val_acc*100, val_acc_var*100, exec_time))
-     '''
-     #######################################
-
-
-     
-     print("Performing 1-fold cross validation 1NN")
-     for k in [1]:
-          t0 = time.time()
-
-          #######################################
-          # TODO Compute train accuracy using whole set
-          #######################################
-          train_y_pred = []
-          for i in range(train_X.shape[0]):
-               query = train_X[i]
-               predicted_label = knn_classify_point(train_X, train_y, query, k)
-               train_y_pred.append(predicted_label)
-
-          train_correct = np.sum(train_y_pred == train_y)
-          train_acc = train_correct / len(train_y)
-
-          #######################################
-          # TODO Compute 4-fold cross validation accuracy
-          #######################################
-          val_acc, val_acc_var = cross_validation(train_X, train_y, num_folds=4, k=k)
-      
-          t1 = time.time()
-          print("k = {:5d} -- train acc = {:.2f}%  val acc = {:.2f}% ({:.4f})\t\t[exe_time = {:.2f}]".format(k, train_acc*100, val_acc*100, val_acc_var*100, t1-t0))
-
-          results.append((k, train_acc, val_acc, val_acc_var))
-
-     for k, train_acc, val_acc, val_acc_var in results:
-          print("k = {:5d} -- train acc = {:.2f}%  val acc = {:.2f}% ({:.4f})".format(k, train_acc*100, val_acc*100, val_acc_var*100))
-     
-     '''
-
-
-
-
 
 
      #######################################
@@ -356,8 +323,6 @@ def load_data():
     train_X = traindata[1:, :-1]
     train_y = traindata[1:, -1]
     train_y = train_y[:,np.newaxis]
-    
-    print(train_X[0])
     
     test_X = np.genfromtxt('test_pub.csv', delimiter=',')[1:, 1:]
 
