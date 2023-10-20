@@ -36,9 +36,9 @@ def main():
 		#######################################
 		train_y_pred = []
 		for i in range(train_X.shape[0]):
-		query = train_X[i]
-		predicted_label = knn_classify_point(train_X, train_y, query, k)
-		train_y_pred.append(predicted_label)
+			query = train_X[i]
+			predicted_label = knn_classify_point(train_X, train_y, query, k)
+			train_y_pred.append(predicted_label)
 
 		train_correct = 0
 		# Evaluate correctness
