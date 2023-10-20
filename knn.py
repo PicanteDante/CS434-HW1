@@ -109,8 +109,8 @@ def main():
           print("k = {} -- train acc = {:.2f}%  val acc = {:.2f}% ({:.4f})\t[exe_time = {:.3f}]".format(k, train_acc*100, val_acc*100, val_acc_var*100, t1-t0))
           results.append((k, train_acc, val_acc, val_acc_var, t1-t0))
           
-		if (val_acc > best_acc):
-			best_k = k
+          if (val_acc > best_acc):
+				best_k = k
           
      for k, train_acc, val_acc, val_acc_var, exec_time in results:
           print("k = {} -- train acc = {:.2f}%  val acc = {:.2f}% ({:.4f})\t[exe_time = {:.3f}]".format(k, train_acc*100, val_acc*100, val_acc_var*100, exec_time))
