@@ -2,136 +2,88 @@ import numpy as np
 import time
 
 def main():
-     #############################################################
-     # These first bits are just to help you develop your code
-     # and have expected ouputs given. All asserts should pass.
-     ############################################################
-     '''
-     # I made up some random 3-dimensional data and some labels for us
-     example_train_x = np.array([ [ 1, 0, 2], [3, -2, 4], [5, -2, 4],
-                                   [ 4, 2, 1.5], [3.2, np.pi, 2], [-5, 0, 1]])
-     example_train_y = np.array([[0], [1], [1], [1], [0], [1]])
-  
-     #########
-     # Sanity Check 1: If I query with examples from the training set 
-     # and k=1, each point should be its own nearest neighbor
-    
-     for i in range(len(example_train_x)):
-          assert([i] == get_nearest_neighbors(example_train_x, example_train_x[i], 1))
-        
-     #########
-     # Sanity Check 2: See if neighbors are right for some examples (ignoring order)
-     nn_idx = get_nearest_neighbors(example_train_x, np.array( [ 1, 4, 2] ), 2)
-     assert(set(nn_idx).difference(set([4,3]))==set())
-
-     nn_idx = get_nearest_neighbors(example_train_x, np.array( [ 1, -4, 2] ), 3)
-     assert(set(nn_idx).difference(set([1,0,2]))==set())
-
-     nn_idx = get_nearest_neighbors(example_train_x, np.array( [ 10, 40, 20] ), 5)
-     assert(set(nn_idx).difference(set([4, 3, 0, 2, 1]))==set())
-
-     #########
-     # Sanity Check 3: Neighbors for increasing k should be subsets
-     query = np.array( [ 10, 40, 20] )
-     p_nn_idx = get_nearest_neighbors(example_train_x, query, 1)
-     for k in range(2,7):
-          nn_idx = get_nearest_neighbors(example_train_x, query, k)
-          assert(set(p_nn_idx).issubset(nn_idx))
-          p_nn_idx = nn_idx
-   
-     #########
-     # Test out our prediction code
-     queries = np.array( [[ 10, 40, 20], [-2, 0, 5], [0,0,0]] )
-     pred = predict(example_train_x, example_train_y, queries, 3)
-     assert( np.all(pred == np.array([[0],[1],[0]])))
-
-     #########
-     # Test our our accuracy code
-     true_y = np.array([[0],[1],[2],[1],[1],[0]])
-     pred_y = np.array([[5],[1],[0],[0],[1],[0]])                    
-     assert( compute_accuracy(true_y, pred_y) == 3/6)
-
-     pred_y = np.array([[5],[1],[2],[0],[1],[0]])                    
-     assert( compute_accuracy(true_y, pred_y) == 4/6)
-
-     '''
-
-     #######################################
-     # Now on to the real data!
-     #######################################
-
-     # Load training and test data as numpy matrices 
-     train_X, train_y, test_X = load_data()
+	#############################################################
+	# These first bits are just to help you develop your code
+	# and have expected ouputs given. All asserts should pass.
+	############################################################
 
 
-     #######################################
-     # Q9 Hyperparmeter Search
-     #######################################
+	#######################################
+	# Now on to the real data!
+	#######################################
 
-     results = []
+	# Load training and test data as numpy matrices
+	train_X, train_y, test_X = load_data()
+
+
+	#######################################
+	# Q9 Hyperparmeter Search
+	#######################################
+
+	results = []
+
+	# Search over possible settings of k
+	print("Performing 4-fold cross validation")
+
+	best_k = 0
+	best_acc = 0.0
      
-     # Search over possible settings of k
-     print("Performing 4-fold cross validation")
-     
-     best_k = 0
-     best_acc = 0.0
-     
-     for k in [1,3,5,7,9,99,999,8000]:
-          t0 = time.time()
-          print("k: {}".format(k))
-          #######################################
-          # TODO Compute train accuracy using whole set
-          #######################################
-          train_y_pred = []
-          for i in range(train_X.shape[0]):
-               query = train_X[i]
-               predicted_label = knn_classify_point(train_X, train_y, query, k)
-               train_y_pred.append(predicted_label)
-          
-          train_correct = 0
-          # Evaluate correctness
-          for i in range(0, len(train_y)):
-               if (train_y_pred[i] == train_y[i]):
-                    train_correct += 1
-          #train_correct = np.sum(train_y_pred == train_y)
-          train_acc = train_correct / len(train_y)
+	for k in [1,3,5,7,9,99,999,8000]:
+		t0 = time.time()
+		print("k: {}".format(k))
+		#######################################
+		# TODO Compute train accuracy using whole set
+		#######################################
+		train_y_pred = []
+		for i in range(train_X.shape[0]):
+		query = train_X[i]
+		predicted_label = knn_classify_point(train_X, train_y, query, k)
+		train_y_pred.append(predicted_label)
 
-          print("train correct: {}".format(train_correct))
-          print("len y: {}".format(len(train_y)))
-          print("len trainypred: {}".format(len(train_y_pred)))
+		train_correct = 0
+		# Evaluate correctness
+		for i in range(0, len(train_y)):
+			if (train_y_pred[i] == train_y[i]):
+				train_correct += 1
+		#train_correct = np.sum(train_y_pred == train_y)
+		train_acc = train_correct / len(train_y)
 
-          #######################################
-          # TODO Compute 4-fold cross validation accuracy
-          #######################################
-          val_acc, val_acc_var = cross_validation(train_X, train_y, num_folds=4, k=k)
-      
-          t1 = time.time()
-          print("k = {} -- train acc = {:.2f}%  val acc = {:.2f}% ({:.4f})\t[exe_time = {:.3f}]".format(k, train_acc*100, val_acc*100, val_acc_var*100, t1-t0))
-          results.append((k, train_acc, val_acc, val_acc_var, t1-t0))
+		print("train correct: {}".format(train_correct))
+		print("len y: {}".format(len(train_y)))
+		print("len trainypred: {}".format(len(train_y_pred)))
+
+		#######################################
+		# TODO Compute 4-fold cross validation accuracy
+		#######################################
+		val_acc, val_acc_var = cross_validation(train_X, train_y, num_folds=4, k=k)
+
+		t1 = time.time()
+		print("k = {} -- train acc = {:.2f}%  val acc = {:.2f}% ({:.4f})\t[exe_time = {:.3f}]".format(k, train_acc*100, val_acc*100, val_acc_var*100, t1-t0))
+		results.append((k, train_acc, val_acc, val_acc_var, t1-t0))
+
+		if (val_acc > best_acc):
+			best_k = k
           
-          if (val_acc > best_acc):
-				best_k = k
-          
-     for k, train_acc, val_acc, val_acc_var, exec_time in results:
+	for k, train_acc, val_acc, val_acc_var, exec_time in results:
           print("k = {} -- train acc = {:.2f}%  val acc = {:.2f}% ({:.4f})\t[exe_time = {:.3f}]".format(k, train_acc*100, val_acc*100, val_acc_var*100, exec_time))
 
 
-     #######################################
-     # Q10 Kaggle Submission
-     #######################################
+	#######################################
+	# Q10 Kaggle Submission
+	#######################################
 
 
-     # TODO set your best k value and then run on the test set
-     best_k = 1
+	# TODO set your best k value and then run on the test set
+	best_k = 1
 
-     # Make predictions on test set
-     pred_test_y = predict(train_X, train_y, test_X, best_k)    
-    
-     # add index and header then save to file
-     test_out = np.concatenate((np.expand_dims(np.array(range(2000),dtype=int), axis=1), pred_test_y), axis=1)
-     header = np.array([["id", "income"]])
-     test_out = np.concatenate((header, test_out))
-     np.savetxt('test_predicted.csv', test_out, fmt='%s', delimiter=',')
+	# Make predictions on test set
+	pred_test_y = predict(train_X, train_y, test_X, best_k)
+
+	# add index and header then save to file
+	test_out = np.concatenate((np.expand_dims(np.array(range(2000),dtype=int), axis=1), pred_test_y), axis=1)
+	header = np.array([["id", "income"]])
+	test_out = np.concatenate((header, test_out))
+	np.savetxt('test_predicted.csv', test_out, fmt='%s', delimiter=',')
 
 ######################################################################
 # Q7 get_nearest_neighbors 
